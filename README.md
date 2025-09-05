@@ -92,8 +92,7 @@ Linux_Root-Monitoring/
 ├── scripts/
 │   ├── monitor.sh       # root 로그인 시도 감지 +  IP 차단 + Slack 알림
 │   └── watch_sudo.sh    # sudo/su 사용 실패 감지 + Slack 알림
-├── allow_ips.txt        # 허용(화이트리스트) IP 
-└── README.md
+└── allow_ips.txt        # 허용(화이트리스트) IP 
 ```
 <br>
 
