@@ -83,7 +83,7 @@ systemd-journald  ──┐
                    │
                    ├── Slack Webhook 알림 (curl)
                    │
-                   └── (옵션) 비인가 IP 자동 차단 (ufw/iptables)
+                   └── 비인가 IP 자동 차단 (ufw/iptables)
 ```
 
 
@@ -94,10 +94,9 @@ systemd-journald  ──┐
 ```
 Linux_Root-Monitoring/
 ├── scripts/
-│   ├── monitor.sh       # root 로그인 시도 감지 + (옵션) IP 차단 + Slack 알림
-│   └── watch_sudo.sh    # sudo/su 사용(성공/실패) 감지 + Slack 알림
-├── allow_ips.txt        # 허용(화이트리스트) IP (선택)
-└── README.md
+│   ├── monitor.sh       # root 로그인 시도 감지 + IP 차단 + Slack 알림
+│   └── watch_sudo.sh    # sudo/su 사용 실패 감지 + Slack 알림
+└── allow_ips.txt        # 허용(화이트리스트) IP 
 ```
 
 
