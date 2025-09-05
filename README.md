@@ -102,6 +102,7 @@ Linux_Root-Monitoring/
 ```
 bash scripts/monitor.sh
 bash scripts/watch_sudo.sh
+
 ```
 
 ```
