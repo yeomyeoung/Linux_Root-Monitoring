@@ -84,7 +84,7 @@ Linux_Root-Monitoring/
 ```
 <br>
 
-# 7. 실행 방법 (Usage)
+# 7. 수동 및 자동실행 방법 (Usage)
 
 ### 7.1 수동 실행
 ```
@@ -92,7 +92,7 @@ bash scripts/monitor.sh
 bash scripts/watch_sudo.sh
 ```
 
-### 7-2 Crontab 활용 자동화
+### 7-2 Crontab 활용한 자동화
 ```
 crontab -e
 ```
@@ -133,6 +133,7 @@ cron
 
 <br>
 <br>
+
 # 9. Troubleshooting
 
 <details>
