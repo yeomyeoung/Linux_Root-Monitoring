@@ -22,21 +22,19 @@ Linux(Ubuntu) 서버에서 root 계정 및 sudo 권한 접근 로그를 감시�
   - 일반 사용자(user)의 `sudo`/`su` 사용 실패 이벤트 감지
   - Slack으로 실시간 알림 전송
   - 비인가 원격 IP 자동 차단 (iptables 기반)
+<br>
 
 # 2. Technology Stack (기술 스택)
 
 ## 2.1 OS & Tools
 | Ubuntu | MobaXterm |
 |--------|-----------|
-| <img width="100" height="100" alt="image" src="https://github.com/user-attachments/assets/2c24dfc4-6692-4250-bb00-3f1b6decbeac" > | <img width="100" height="100" alt="image" src="https://github.com/user-attachments/assets/b9ae3f4a-9b01-4e12-9806-12dc33bdbe8e" > |
-
-
-<br>
+| <img width="70" height="70" alt="image" src="https://github.com/user-attachments/assets/2c24dfc4-6692-4250-bb00-3f1b6decbeac" > | <img width="70" height="70" alt="image" src="https://github.com/user-attachments/assets/b9ae3f4a-9b01-4e12-9806-12dc33bdbe8e" > |
 
 ## 2.2 Cooperation
 | Git | Notion | Slack |
 |-----|--------|-------|
-| <img src="https://github.com/user-attachments/assets/483abc38-ed4d-487c-b43a-3963b33430e6" alt="git" width="100"> | <img src="https://github.com/user-attachments/assets/34141eb9-deca-416a-a83f-ff9543cc2f9a" alt="Notion" width="100"> | <img src="https://cdn.simpleicons.org/slack" alt="Slack" width="100"> |
+| <img src="https://github.com/user-attachments/assets/483abc38-ed4d-487c-b43a-3963b33430e6" alt="git" width="70"> | <img src="https://github.com/user-attachments/assets/34141eb9-deca-416a-a83f-ff9543cc2f9a" alt="Notion" width="70"> | <img src="https://cdn.simpleicons.org/slack" alt="Slack" width="70"> |
 
 
 <br>
@@ -72,7 +70,7 @@ systemd-journald  ──┐
                    │
                    ├── Slack Webhook 알림 (curl)
                    │
-                   └── 비인가 IP 자동 차단 (ufw/iptables)
+                   └── 비인가 IP 자동 차단 (iptables)
 ```
 <br>
 
