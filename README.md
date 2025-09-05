@@ -1,18 +1,19 @@
 # Linux_Root-Monitoring
 Ubuntu를 이용해 root 계정과 sudo 권한 접근을 탐지하고, Slack에 알림 전송과 해당 IP 차단 기능을 구현한 레포지토리 입니다!
 
-<a href="https://club-project-one.vercel.app/" target="_blank">
-<img src="https://github.com/user-attachments/assets/daa622b9-7c69-4786-8db3-4996b7f140be" alt="배너" width="100%"/>
-</a>
+<br/>
+<br/>
+
+# 1. Project Overview (프로젝트 개요)
+- 프로젝트 이름: Ubuntu로 구현한 root계정, 일반 유저의 sudo 권한 탈취 모니터링 시스템
+- 프로젝트 설명: 
 
 <br/>
 <br/>
 
-# 0. Getting Started (시작하기)
-```bash
-$ npm start
-```
-[서비스 링크](https://club-project-one.vercel.app/)
+# 2. Team Members (팀원 및 팀 소개)
+| 박여명 | 신준수 Linux_Root-Monitoring
+Ubuntu를 이용해 root 계정과 sudo 권한 접근을 탐지하고, Slack에 알림 전송과 해당 IP 차단 기능을 구현한 레포지토리 입니다!
 
 <br/>
 <br/>
@@ -25,11 +26,11 @@ $ npm start
 <br/>
 
 # 2. Team Members (팀원 및 팀 소개)
-| 이동규 | 신유승 |
+| 박여명 | 신준수 |
 |:------:|:------:|
-| <img src="https://github.com/user-attachments/assets/c1c2b1e3-656d-4712-98ab-a15e91efa2da" alt="이동규" width="150"> | <img src="https://github.com/user-attachments/assets/78ec4937-81bb-4637-975d-631eb3c4601e" alt="신유승" width="150"> |
+| <img src="https://avatars.githubusercontent.com/u/166470537?v=4" alt="박여명" width="150"> | <img src="https://avatars.githubusercontent.com/u/137847336?v=4" alt="신준수" width="150"> |
 | PL | FE |
-| [GitHub](https://github.com/LDK1009) | [GitHub](https://github.com/SinYusi) |
+| [GitHub](https://github.com/yeomyeoung) | [GitHub](https://github.com/shinjunsuuu) |
 
 <br/>
 <br/>
