@@ -5,9 +5,9 @@ Ubuntu를 이용해 root 계정과 sudo 권한 접근을 탐지하고, Slack에 
 
 # 0. Getting Started
    
-### 요구사항
+### 수행 환경
 
-- Ubuntu 22.04+ / 24.04+
+- Ubuntu 24.04+
 - curl, ufw(또는 iptables), systemd-journald 사용 환경
 - Slack Incoming Webhook URL 1개
 <br>
@@ -104,14 +104,30 @@ Linux_Root-Monitoring/
 <br/>
 
 # 8. 결과 출력
-<img width="100%" alt="root 계정 접근 알림 출력" src="">
-<img width="100%" alt="root 계정 접근 비인가 IP 차단" src="">
-<img width="100%" alt="일반 USER의 sudo 명령어 사용 감지" src="https://github.com/user-attachments/assets/bf33c4e1-dcb2-4002-a1e7-f1dace5bb4fc">
+## 비인가 IP의 root 계정 접근 알림 출력
+<img width="570" height="80" alt="비인가 IP의 root 계정 접근 알림 출력" src="https://github.com/user-attachments/assets/4d8c5a4a-631f-4712-b97a-0e466dab53a3" />
+<br><br>
+
+## 비인가 IP가 3회 이상 접근 시도시 해당 IP 차단
+<img width="570" height="80" alt="비인가 IP가 3회 이상 접근 시도시 해당 IP 차단" src="https://github.com/user-attachments/assets/a7d90397-89da-43f8-9bd0-f209afea9f81" />
+<br><br>
+
+## 해당 IP 차단 확인
+<img width="480" height="134" alt="image" src="https://github.com/user-attachments/assets/6fb18d87-116a-40f3-b577-382ee437b16f" />
+<br><br>
+
+## 일반 USER의 sudo 명령어 사용 감지
+<img width="570" height="80" alt="image" src="https://github.com/user-attachments/assets/96e86acb-a855-49ee-aa3c-200a36bf94cc" />
+<br><br>
+
+## 일반 USER가 3회 이상 sudo 명령어 입력시 계정 차단
+<img width="560" height="180" alt="image" src="https://github.com/user-attachments/assets/31dd9cb1-cd4f-47a6-aa7d-59035b44fa4b" />
+
 
 # 9. 트러블슈팅
 
 <details>
-<summary>  1. restart 로 root 권한 변경 적용 </summary>
+<summary><h3> 1. restart 로 root 권한 변경 적용</h3></summary>
 <br>
 시스템 설정 파일에서 root 권한을 부여했음에도, 즉시 적용되지 않아 root 계정 접근이 불가능한 문제가 발생.  
 원인 분석 과정에서 서비스 단순 재시작만으로는 반영되지 않는 경우가 있음을 확인하였고, 최종적으로 시스템을 재부팅(restart)하여 권한 변경 사항이 정상적으로 적용됨을 확인.  
@@ -119,4 +135,5 @@ Linux_Root-Monitoring/
 **권한 및 보안 설정 변경 시 즉각적인 반영 여부를 점검하고, 필요 시 시스템 재시작을 고려해야 한다는 점**을 학습했습니다.  
 
 </details>
+
 
