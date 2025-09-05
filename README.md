@@ -23,9 +23,25 @@ Linux(Ubuntu) 서버에서 root 계정 및 sudo 권한 접근 로그를 감시�
   - Slack으로 실시간 알림 전송
   - 비인가 원격 IP 자동 차단 (iptables 기반)
 
+# 2. Technology Stack (기술 스택)
+
+## 2.1 OS & Tools
+| Ubuntu | MobaXterm |
+|--------|-----------|
+| <img width="100" height="100" alt="image" src="https://github.com/user-attachments/assets/2c24dfc4-6692-4250-bb00-3f1b6decbeac" > | <img width="100" height="100" alt="image" src="https://github.com/user-attachments/assets/b9ae3f4a-9b01-4e12-9806-12dc33bdbe8e" > |
+
+
 <br>
 
-# 2. Team Members (팀원 및 팀 소개)
+## 2.2 Cooperation
+| Git | Notion | Slack |
+|-----|--------|-------|
+| <img src="https://github.com/user-attachments/assets/483abc38-ed4d-487c-b43a-3963b33430e6" alt="git" width="100"> | <img src="https://github.com/user-attachments/assets/34141eb9-deca-416a-a83f-ff9543cc2f9a" alt="Notion" width="100"> | <img src="https://cdn.simpleicons.org/slack" alt="Slack" width="100"> |
+
+
+<br>
+
+# 3. Team Members (팀원 및 팀 소개)
 
 | 박여명 | 신준수 |
 |:------:|:------:|
@@ -34,43 +50,16 @@ Linux(Ubuntu) 서버에서 root 계정 및 sudo 권한 접근 로그를 감시�
 
 <br>
 
-# 3. Key Features (주요 기능)
-
-- **허용되지 않은 IP의 root 접근 시도 탐지 및 차단**
-  - 3회 이상 root 로그인 실패 → 자동 차단
-  - 허용 IP(화이트리스트)는 차단하지 않고 알림만 전송
-
-- **root 로그인 이벤트 감지**
-  - `journalctl -u sshd` 분석 → 성공(`Accepted`), 실패(`Failed password`) 패턴 탐지
-
-- **sudo 사용/시도 감지**
-  - `journalctl SYSLOG_IDENTIFIER=sudo` 분석
-  - `user NOT in sudoers`, `authentication failure`, `COMMAND=...` 구분
-
-- **su 사용/시도 감지**
-  - `journalctl -t su` 분석
-  - 실패(`authentication failure`), 성공(`session opened`) 구분
-
-- **Slack 알림**
-  - 호스트명, 시간, 사용자, 명령, 원본 로그 조각 전송
-  - JSON 이스케이프 처리로 안정적인 메시지 전송
+# 4. Key Features (주요 기능)
+| 구분 | 기능 설명 | 탐지 방법 | 추가 동작 |
+|------|-----------|-----------|-----------|
+| **Root 접근 시도** | 허용되지 않은 IP의 root 접근 시도 탐지 및 차단 | `journalctl -u sshd` → `Accepted`, `Failed password` 패턴 분석 | 3회 이상 실패 시 자동 차단 / 허용 IP(화이트리스트)는 알림만 전송 |
+| **Root 로그인 이벤트** | root 로그인 성공/실패 이벤트 감지 | `journalctl -u sshd` 분석 | Slack 알림 전송 |
+| **Sudo 사용/시도** | sudo 권한 사용/시도 감지 | `journalctl SYSLOG_IDENTIFIER=sudo` 분석 → `user NOT in sudoers`, `authentication failure`, `COMMAND=...` 구분 | Slack 알림 전송 |
+| **Su 사용/시도** | su 권한 전환 감지 | `journalctl -t su` 분석 → `authentication failure`, `session opened` 구분 | Slack 알림 전송 |
+| **Slack 알림** | 호스트명, 시간, 사용자, 명령, 원본 로그 조각 전달 | JSON 이스케이프 처리 적용 | 안정적인 메시지 전송 |
 
 <br>
-
-# 4. Technology Stack (기술 스택)
-
-## 4.1 OS & Tools
-| Ubuntu | MobaXterm |
-|--------|-----------|
-| <img width="100" height="100" alt="image" src="https://github.com/user-attachments/assets/2c24dfc4-6692-4250-bb00-3f1b6decbeac" > | <img width="100" height="100" alt="image" src="https://github.com/user-attachments/assets/b9ae3f4a-9b01-4e12-9806-12dc33bdbe8e" > |
-
-
-<br>
-
-## 4.2 Cooperation
-| Git | Notion | Slack |
-|-----|--------|-------|
-| <img src="https://github.com/user-attachments/assets/483abc38-ed4d-487c-b43a-3963b33430e6" alt="git" width="100"> | <img src="https://github.com/user-attachments/assets/34141eb9-deca-416a-a83f-ff9543cc2f9a" alt="Notion" width="100"> | <img src="https://cdn.simpleicons.org/slack" alt="Slack" width="100"> |
 
 <br>
 
@@ -99,12 +88,13 @@ Linux_Root-Monitoring/
 
 # 7. 실행 방법 (Usage)
 
-### 1) 수동 실행
+### 7.1 수동 실행
 ```
 bash scripts/monitor.sh
 bash scripts/watch_sudo.sh
 ```
 
+### 7-2 Crontab 활용 자동화
 ```
 crontab -e
 ```
@@ -118,7 +108,7 @@ cron
 <br>
 <br>
 
-# 8. 결과 출력
+# 8. Slack 알림을 통한 결과 출력
 
 ### 비인가 IP root 접근 알림
 <img width="570" alt="비인가 IP root 계정 접근 알림 출력" src="https://github.com/user-attachments/assets/4d8c5a4a-631f-4712-b97a-0e466dab53a3" />
