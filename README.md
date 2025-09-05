@@ -1,6 +1,7 @@
 # Linux_Root-Monitoring
 Ubuntu를 이용해 root 계정과 sudo 권한 접근을 탐지하고, Slack에 알림 전송과 해당 IP 차단 기능을 구현한 레포지토리 입니다!
 <br>
+<br>
 
 # 1. Project Overview (프로젝트 개요)
 - 프로젝트 이름: Ubuntu로 구현한 root계정, 일반 유저의 sudo 권한 탈취 모니터링 시스템
