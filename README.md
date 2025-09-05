@@ -56,8 +56,8 @@ Ubuntu를 이용해 root 계정과 sudo 권한 접근을 탐지하고, Slack에 
 <br/>
 <br/>
 
-# 5. Technology Stack (기술 스택)
-## 5.1 
+# 4. Technology Stack (기술 스택)
+## 4.1 
 |  |  |
 |-----------------|-----------------|
 | Ubuntu    |<img width="80" height="80" alt="image" src="https://github.com/user-attachments/assets/d0627fec-00c1-49d3-b447-aaebed8ab5c6" />| 
@@ -66,7 +66,7 @@ Ubuntu를 이용해 root 계정과 sudo 권한 접근을 탐지하고, Slack에 
 
 <br/>
 
-## 5.2 Cooperation
+## 4.2 Cooperation
 |  |  |
 |-----------------|-----------------|
 | Git    |  <img src="https://github.com/user-attachments/assets/483abc38-ed4d-487c-b43a-3963b33430e6" alt="git" width="100">    |
@@ -75,7 +75,7 @@ Ubuntu를 이용해 root 계정과 sudo 권한 접근을 탐지하고, Slack에 
 
 <br/>
 
-# 6. Project Structure (프로젝트 구조)
+# 5. Project Structure (프로젝트 구조)
 ```plaintext
 systemd-journald  ──┐
   (sshd/sudo/su)   │  journalctl (최근 N분)
@@ -87,7 +87,7 @@ systemd-journald  ──┐
 ```
 
 
-# 7. 구성 파일
+# 6. 구성 파일
 
 <br/>
 
@@ -104,7 +104,7 @@ Linux_Root-Monitoring/
 <br/>
 <br/>
 
-# 8. 결과 출력
+# 7. 결과 출력
 ## 비인가 IP의 root 계정 접근 알림 출력
 <img width="570" height="80" alt="비인가 IP의 root 계정 접근 알림 출력" src="https://github.com/user-attachments/assets/4d8c5a4a-631f-4712-b97a-0e466dab53a3" />
 <br><br>
@@ -125,7 +125,7 @@ Linux_Root-Monitoring/
 <img width="560" height="180" alt="image" src="https://github.com/user-attachments/assets/31dd9cb1-cd4f-47a6-aa7d-59035b44fa4b" />
 
 
-# 9. 트러블슈팅
+# 8. 트러블슈팅
 
 <details>
 <summary><h3> 1. restart 로 root 권한 변경 적용</h3></summary>
