@@ -1,139 +1,229 @@
 # Linux_root_Monitoring
-Ubuntu를 이용해 root 계정과 sudo 권한 접근을 탐지하고, Slack에 알림 전송과 해당 IP 차단 기능을 구현한 레포지토리 입니다!
-<br>
+
+Ubuntu를 이용해 **root 계정 및 sudo 권한 접근을 탐지**하고, Slack에 알림 전송 및 비인가 IP 자동 차단 기능을 구현한 레포지토리입니다.  
+
 <br>
 
 # 0. Getting Started
    
 ### 수행 환경
-
 - Ubuntu 24.04+
-- curl, ufw(또는 iptables), systemd-journald 사용 환경
+- `curl`, `ufw`(또는 `iptables`), `systemd-journald` 사용 환경
 - Slack Incoming Webhook URL 1개
+
 <br>
 
 # 1. Project Overview (프로젝트 개요)
-- 프로젝트 이름: Ubuntu로 구현한 root계정, 일반 유저의 sudo 권한 탈취 모니터링 시스템
-- 프로젝트 설명:
-    - root 계정에 대한 비정상 로그인 시도 탐지
-    - 일반 사용자(user)의 sudo/su 사용(성공/실패) 이벤트 감지
-    - Slack으로 알림 전송
-    - 비인가 원격 IP 자동 차단( ufw 또는 iptables )
 
-<br/>
-<br/>
+- **프로젝트 이름**: Ubuntu 기반 root 계정 & sudo 권한 탈취 모니터링 시스템
+- **프로젝트 설명**:
+  - root 계정에 대한 비정상 로그인 시도 탐지
+  - 일반 사용자(user)의 `sudo`/`su` 사용(성공/실패) 이벤트 감지
+  - Slack으로 실시간 알림 전송
+  - 비인가 원격 IP 자동 차단 (ufw/iptables 기반)
+
+<br>
 
 # 2. Team Members (팀원 및 팀 소개)
+
 | 박여명 | 신준수 |
 |:------:|:------:|
 | <img src="https://avatars.githubusercontent.com/u/166470537?v=4" alt="박여명" width="150"> | <img src="https://avatars.githubusercontent.com/u/137847336?v=4" alt="신준수" width="150"> |
 | [GitHub](https://github.com/yeomyeoung) | [GitHub](https://github.com/shinjunsuuu) |
 
-<br/>
-<br/>
+<br>
 
 # 3. Key Features (주요 기능)
 
-- **허용되지 않은 IP에서 지속적으로 root 계정에 접근 시도시 해당 IP 차단**:
-  - 3회 이상 계정 접근 시도시 iptable 방화벽을 사용해 해당 ip 차단
+- **허용되지 않은 IP의 root 접근 시도 탐지 및 차단**
+  - 3회 이상 root 로그인 실패 → 자동 차단
+  - 허용 IP(화이트리스트)는 차단하지 않고 알림만 전송
 
-- **root 로그인 실패/시도 감지**:
-  - journalctl -t sshd 에서 Failed password for root 등 패턴 추출
-  - **허용 IP(화이트리스트)** 면 알림만, 그 외는 자동 차단 + 알림(옵션)
+- **root 로그인 이벤트 감지**
+  - `journalctl -u sshd` 분석 → 성공(`Accepted`), 실패(`Failed password`) 패턴 탐지
 
-- **sudo 사용/시도 감지**:
-  - journalctl SYSLOG_IDENTIFIER=sudo 분석
-  - user NOT in sudoers, authentication failure(실패), COMMAND=…(성공) 구분
+- **sudo 사용/시도 감지**
+  - `journalctl SYSLOG_IDENTIFIER=sudo` 분석
+  - `user NOT in sudoers`, `authentication failure`, `COMMAND=...` 구분
 
-- **su 사용/시도 감지**:
-  - journalctl -t su 분석
-  - authentication failure(실패), session opened for user …(성공) 구분
+- **su 사용/시도 감지**
+  - `journalctl -t su` 분석
+  - 실패(`authentication failure`), 성공(`session opened`) 구분
 
-- **Slack 알림**:
-  - 호스트명/시간/사용자/명령/원본 로그 조각 전송
-  - 특수문자 JSON 이스케이프 처리
+- **Slack 알림**
+  - 호스트명, 시간, 사용자, 명령, 원본 로그 조각 전송
+  - JSON 이스케이프 처리로 안정적인 메시지 전송
 
-<br/>
-<br/>
+<br>
 
 # 4. Technology Stack (기술 스택)
-## 4.1 
-|  |  |
-|-----------------|-----------------|
-| Ubuntu    |<img width="80" height="80" alt="image" src="https://github.com/user-attachments/assets/d0627fec-00c1-49d3-b447-aaebed8ab5c6" />| 
-| MobaXterm    |<img width="80" height="80" alt="image" src="https://github.com/user-attachments/assets/810ce5c8-8789-458c-8593-d56e8b3ee617" />|
+
+## 4.1 OS & Tools
+| Ubuntu | MobaXterm |
+|--------|-----------|
+| <img width="100" height="100" alt="image" src="https://github.com/user-attachments/assets/2c24dfc4-6692-4250-bb00-3f1b6decbeac" > | <img width="100" height="100" alt="image" src="https://github.com/user-attachments/assets/b9ae3f4a-9b01-4e12-9806-12dc33bdbe8e" > |
 
 
-<br/>
+<br>
 
 ## 4.2 Cooperation
-|  |  |
-|-----------------|-----------------|
-| Git    |  <img src="https://github.com/user-attachments/assets/483abc38-ed4d-487c-b43a-3963b33430e6" alt="git" width="100">    |
-| Notion    |  <img src="https://github.com/user-attachments/assets/34141eb9-deca-416a-a83f-ff9543cc2f9a" alt="Notion" width="100">    |
-| Slack    |   <img src="https://cdn.simpleicons.org/slack" alt="Slack" width="100">   |
+| Git | Notion | Slack |
+|-----|--------|-------|
+| <img src="https://github.com/user-attachments/assets/483abc38-ed4d-487c-b43a-3963b33430e6" alt="git" width="100"> | <img src="https://github.com/user-attachments/assets/34141eb9-deca-416a-a83f-ff9543cc2f9a" alt="Notion" width="100"> | <img src="https://cdn.simpleicons.org/slack" alt="Slack" width="100"> |
 
-<br/>
+<br>
 
 # 5. Project Structure (프로젝트 구조)
-```plaintext
+```
+plaintext
 systemd-journald  ──┐
   (sshd/sudo/su)   │  journalctl (최근 N분)
                    ├── 패턴 필터링 (awk/grep/sed)
                    │
                    ├── Slack Webhook 알림 (curl)
                    │
-                   └── 비인가 IP 자동 차단 (ufw/iptables)
+                   └── (옵션) 비인가 IP 자동 차단 (ufw/iptables)
 ```
-
+<br>
 
 # 6. 구성 파일
-
-<br/>
-
 ```
 Linux_Root-Monitoring/
 ├── scripts/
-│   ├── monitor.sh       # root 로그인 시도 감지 + IP 차단 + Slack 알림
-│   └── watch_sudo.sh    # sudo/su 사용 실패 감지 + Slack 알림
-└── allow_ips.txt        # 허용(화이트리스트) IP 
+│   ├── monitor.sh       # root 로그인 시도 감지 + (옵션) IP 차단 + Slack 알림
+│   └── watch_sudo.sh    # sudo/su 사용(성공/실패) 감지 + Slack 알림
+├── allow_ips.txt        # 허용(화이트리스트) IP (선택)
+└── README.md
+```
+<br>
+
+# 7. 실행 방법 (Usage)
+
+### 1) 수동 실행
+```
+bash scripts/monitor.sh
+bash scripts/watch_sudo.sh
 ```
 
+```
+crontab -e
+```
 
-<br/>
-<br/>
+아래 내용 추가:
+```
+cron
+* * * * * /usr/bin/bash /home/ubuntu/Linux_Root-Monitoring/scripts/monitor.sh
+* * * * * /usr/bin/bash /home/ubuntu/Linux_Root-Monitoring/scripts/watch_sudo.sh
+```
+<br>
+<br>
 
-# 7. 결과 출력
-## 비인가 IP의 root 계정 접근 알림 출력
-<img width="570" height="80" alt="비인가 IP의 root 계정 접근 알림 출력" src="https://github.com/user-attachments/assets/4d8c5a4a-631f-4712-b97a-0e466dab53a3" />
-<br><br>
+# 8. 결과 출력
 
-## 비인가 IP가 3회 이상 접근 시도시 해당 IP 차단
-<img width="570" height="80" alt="비인가 IP가 3회 이상 접근 시도시 해당 IP 차단" src="https://github.com/user-attachments/assets/a7d90397-89da-43f8-9bd0-f209afea9f81" />
-<br><br>
+### 비인가 IP root 접근 알림
+<img width="570" alt="비인가 IP root 계정 접근 알림 출력" src="https://github.com/user-attachments/assets/4d8c5a4a-631f-4712-b97a-0e466dab53a3" />
+<br>
+<br>
 
-## 해당 IP 차단 확인
-<img width="480" height="134" alt="image" src="https://github.com/user-attachments/assets/6fb18d87-116a-40f3-b577-382ee437b16f" />
-<br><br>
+### 비인가 IP 3회 이상 접근 시 차단
+<img width="570" alt="비인가 IP 3회 이상 접근 시 차단" src="https://github.com/user-attachments/assets/a7d90397-89da-43f8-9bd0-f209afea9f81" />
+<br>
+<br>
 
-## 일반 USER의 sudo 명령어 사용 감지
-<img width="570" height="80" alt="image" src="https://github.com/user-attachments/assets/96e86acb-a855-49ee-aa3c-200a36bf94cc" />
-<br><br>
+### 해당 IP 차단 확인
+<img width="480" alt="iptables DROP 규칙 확인" src="https://github.com/user-attachments/assets/6fb18d87-116a-40f3-b577-382ee437b16f" />
+<br>
+<br>
 
-## 일반 USER가 3회 이상 sudo 명령어 입력시 계정 차단
-<img width="560" height="180" alt="image" src="https://github.com/user-attachments/assets/31dd9cb1-cd4f-47a6-aa7d-59035b44fa4b" />
+### 일반 USER sudo 명령어 감지
+<img width="570" alt="sudo 명령 감지" src="https://github.com/user-attachments/assets/96e86acb-a855-49ee-aa3c-200a36bf94cc" />
+<br>
+<br>
 
+### 일반 USER 3회 이상 sudo 명령어 실패 시 계정 차단
+<img width="560" alt="sudo 3회 실패 계정 차단" src="https://github.com/user-attachments/assets/31dd9cb1-cd4f-47a6-aa7d-59035b44fa4b" />
 
-# 8. 트러블슈팅
+<br>
+<br>
+
+# 9. Troubleshooting
 
 <details>
-<summary><h3> 1. restart 로 root 권한 변경 적용</h3></summary>
+<summary><h3> 1. root 권한 변경 적용 문제</h3></summary>
 <br>
-시스템 설정 파일에서 root 권한을 부여했음에도, 즉시 적용되지 않아 root 계정 접근이 불가능한 문제가 발생.  
-원인 분석 과정에서 서비스 단순 재시작만으로는 반영되지 않는 경우가 있음을 확인하였고, 최종적으로 시스템을 재부팅(restart)하여 권한 변경 사항이 정상적으로 적용됨을 확인.  
+시스템 설정 파일에서 root 권한을 부여했음에도 즉시 적용되지 않아 root 계정 접근이 불가능한 문제가 발생.  
+분석 결과, 서비스 단순 재시작만으로는 반영되지 않는 경우가 있었으며, 최종적으로 시스템 재부팅(restart) 으로 권한 변경 사항이 정상 적용됨을 확인.  
 
-**권한 및 보안 설정 변경 시 즉각적인 반영 여부를 점검하고, 필요 시 시스템 재시작을 고려해야 한다는 점**을 학습했습니다.  
-
+👉 권한 및 보안 설정 변경 시 즉각적인 반영 여부를 점검하고, 필요 시 재부팅까지 고려해야 함을 학습.
 </details>
 
+<details>
+<summary><h3> 2. 내 IP가 차단된 경우</h3></summary>
+<br>
+테스트 중 본인의 IP가 `iptables` 또는 `ufw`에 의해 차단되어 접속 불가 상황이 발생.  
+아래 명령어로 확인 가능:
+bash
+sudo iptables -L INPUT -n --line-numbers
+sudo ufw status numbered
 
+차단 해제:
+bash
+sudo iptables -D INPUT <번호>
+sudo ufw delete <번호>
+sudo netfilter-persistent save
+
+👉 운영 시 관리자 본인 IP는 반드시 화이트리스트(`allow_ips.txt`)에 미리 추가하는 것이 안전.
+</details>
+
+<details>
+<summary><h3> 3. Slack 알림이 전송되지 않는 경우</h3></summary>
+<br>
+Slack Webhook URL 설정 오류, 네트워크 차단, JSON 이스케이프 문제로 인해 알림 전송이 실패할 수 있음.  
+
+- Webhook URL 유효성 재확인  
+- `curl` 명령으로 직접 테스트:
+bash
+curl -X POST -H 'Content-type: application/json' --data '{"text":"테스트 메시지"}' https://hooks.slack.com/services/XXX/YYY/ZZZ
+
+- 메시지 본문에 따옴표(`"`)나 백슬래시(`\`)가 포함될 경우 JSON escape 필수
+</details>
+
+<details>
+<summary><h3> 4. sshd_config 변경 후 접속 불가</h3></summary>
+<br>
+`sshd_config` 또는 `/etc/ssh/sshd_config.d/*.conf` 설정 오류 시 SSH 연결이 차단될 수 있음.  
+
+대응 방법:
+- 변경 전 반드시 문법 검사:
+bash
+sudo sshd -t
+- 문제가 생겼을 때는 콘솔 접속(클라우드 VM이라면 웹 콘솔) 후 설정 복구  
+- 필요 시 `PermitRootLogin yes` 와 `AllowUsers` 설정을 최소화하여 임시 접속 허용
+</details>
+
+<details>
+<summary><h3> 5. cron 실행이 안 되는 경우</h3></summary>
+<br>
+스크립트가 수동 실행은 잘 되지만 `cron` 등록 후 실행되지 않는 문제가 발생할 수 있음.  
+
+원인:
+- `cron` 환경에서는 PATH, 환경변수 부족
+- `journalctl` 명령어 실행 시 `sudo` 권한 문제
+
+해결:
+- `cron`에서 절대 경로 지정:
+cron
+* * * * * /usr/bin/bash /home/ubuntu/Linux_Root-Monitoring/scripts/monitor.sh
+- 스크립트 내부에서 `sudo` 사용 시, `visudo` 로 `NOPASSWD` 권한 부여
+</details>
+
+<details>
+<summary><h3> 6. systemd 서비스 로그 확인</h3></summary>
+<br>
+systemd 서비스 등록 후 실행이 안 될 경우 로그 확인이 필요:
+bash
+sudo systemctl status root-monitor
+journalctl -u root-monitor -f
+
+👉 로그를 통해 Slack 전송 실패, iptables 권한 문제 등 원인을 빠르게 파악할 수 있음.
+</details>
