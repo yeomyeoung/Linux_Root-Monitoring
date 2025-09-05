@@ -60,8 +60,9 @@ Ubuntu를 이용해 root 계정과 sudo 권한 접근을 탐지하고, Slack에 
 ## 5.1 
 |  |  |
 |-----------------|-----------------|
-| Ubuntu    |<img src="https://assets.ubuntu.com/v1/ff6a9a38-ubuntu-logo-2022.svg" alt="Ubuntu" width="80" height="80">| 
-| MobaXterm    |<img src="https://dashboardicons.com/icons/mobaxterm/png/512x512" alt="MobaXterm" width="80" height="80">|
+| Ubuntu    |<img width="80" height="80" alt="image" src="https://github.com/user-attachments/assets/d0627fec-00c1-49d3-b447-aaebed8ab5c6" />| 
+| MobaXterm    |<img width="80" height="80" alt="image" src="https://github.com/user-attachments/assets/810ce5c8-8789-458c-8593-d56e8b3ee617" />|
+
 
 <br/>
 
