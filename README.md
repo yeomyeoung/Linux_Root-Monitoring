@@ -7,9 +7,10 @@ Linux(Ubuntu) 서버에서 root 계정 및 sudo 권한 접근 로그를 감시�
 # 0. Getting Started
    
 ### 수행 환경
-- Ubuntu 24.04+
-- `curl`, `ufw`(또는 `iptables`), `systemd-journald` 사용 환경
-- Slack Incoming Webhook URL 1개
+- 운영 환경: Ubuntu 24.04+
+- 필수 패키지: curl, iptables, systemd-journald
+- 외부 연동: Slack Incoming Webhook URL 1개
+- 구현 방식: Shell Programming 기반 자동화 스크립트
 
 <br>
 
@@ -18,9 +19,9 @@ Linux(Ubuntu) 서버에서 root 계정 및 sudo 권한 접근 로그를 감시�
 - **프로젝트 이름**: Ubuntu 기반 root 계정 & sudo 권한 탈취 모니터링 시스템
 - **프로젝트 설명**:
   - root 계정에 대한 비정상 로그인 시도 탐지
-  - 일반 사용자(user)의 `sudo`/`su` 사용(성공/실패) 이벤트 감지
+  - 일반 사용자(user)의 `sudo`/`su` 사용 실패 이벤트 감지
   - Slack으로 실시간 알림 전송
-  - 비인가 원격 IP 자동 차단 (ufw/iptables 기반)
+  - 비인가 원격 IP 자동 차단 (iptables 기반)
 
 <br>
 
