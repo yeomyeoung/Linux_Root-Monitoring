@@ -133,86 +133,94 @@ cron
 
 <br>
 <br>
-
 # 9. Troubleshooting
 
 <details>
-<summary><h3> 1. root 권한 변경 적용 문제</h3></summary>
+<summary><h3> 1. <strong>root 권한 변경 적용 문제</strong></h3></summary>
 <br>
-시스템 설정 파일에서 root 권한을 부여했음에도 즉시 적용되지 않아 root 계정 접근이 불가능한 문제가 발생. 
+시스템 설정 파일에서 <strong>root 권한</strong>을 부여했음에도 즉시 적용되지 않아 <strong>root 계정 접근 불가</strong> 현상이 발생.  
 <br>
-분석 결과, 서비스 단순 재시작만으로는 반영되지 않는 경우가 있었으며, 최종적으로 시스템 재부팅(restart) 으로 권한 변경 사항이 정상 적용됨을 확인.  
+서비스 단순 재시작만으로는 반영되지 않는 경우가 있었으며, 최종적으로 <strong>시스템 재부팅(restart)</strong>으로 변경 사항이 정상 적용됨을 확인.  
 
-👉 권한 및 보안 설정 변경 시 즉각적인 반영 여부를 점검하고, 필요 시 재부팅까지 고려해야 함.
+👉 권한 및 보안 설정 변경 시 즉각적인 반영 여부를 반드시 점검.
 </details>
 
 <details>
-<summary><h3> 2. 내 IP가 차단된 경우</h3></summary>
+<summary><h3> 2. <strong>내 IP 차단</strong></h3></summary>
 <br>
-테스트 중 본인의 IP가 `iptables` 또는 `ufw`에 의해 차단되어 접속 불가 상황이 발생.  
-아래 명령어로 확인 가능:
-bash
+테스트 중 본인의 <strong>IP가 iptables에 의해 차단</strong>되어 접속 불가 상황이 발생.  
+
+확인 명령어:
+```bash
 sudo iptables -L INPUT -n --line-numbers
-sudo ufw status numbered
+```
 
 차단 해제:
-bash
+```bash
 sudo iptables -D INPUT <번호>
-sudo ufw delete <번호>
 sudo netfilter-persistent save
+```
 
-👉 운영 시 관리자 본인 IP는 반드시 화이트리스트(`allow_ips.txt`)에 미리 추가하는 것이 안전.
+👉 운영 시 관리자 본인 IP는 반드시 <strong>화이트리스트(allow_ips.txt)</strong>에 추가 필요.
 </details>
 
 <details>
-<summary><h3> 3. Slack 알림이 전송되지 않는 경우</h3></summary>
+<summary><h3> 3. <strong>Slack 알림 전송 실패</strong></h3></summary>
 <br>
-Slack Webhook URL 설정 오류, 네트워크 차단, JSON 이스케이프 문제로 인해 알림 전송이 실패할 수 있음.  
+<strong>Slack Webhook URL 오류</strong>, <strong>네트워크 차단</strong>, <strong>JSON escape 문제</strong>로 인해 알림 전송이 실패할 수 있음.  
 
 - Webhook URL 유효성 재확인  
-- `curl` 명령으로 직접 테스트:
-bash
-curl -X POST -H 'Content-type: application/json' --data '{"text":"테스트 메시지"}' https://hooks.slack.com/services/XXX/YYY/ZZZ
-
-- 메시지 본문에 따옴표(`"`)나 백슬래시(`\`)가 포함될 경우 JSON escape 필수
+- `curl` 테스트:
+```bash
+curl -X POST -H 'Content-type: application/json' \
+--data '{"text":"테스트 메시지"}' https://hooks.slack.com/services/XXX/YYY/ZZZ
+```
+- 메시지 본문에 `"`, `\` 포함 시 <strong>JSON escape</strong> 필수
 </details>
 
 <details>
-<summary><h3> 4. sshd_config 변경 후 접속 불가</h3></summary>
+<summary><h3> 4. <strong>sshd_config 변경 후 접속 불가</strong></h3></summary>
 <br>
-`sshd_config` 또는 `/etc/ssh/sshd_config.d/*.conf` 설정 오류 시 SSH 연결이 차단될 수 있음.  
-
-대응 방법:
-- 변경 전 반드시 문법 검사:
-bash
-sudo sshd -t
-- 문제가 생겼을 때는 콘솔 접속(클라우드 VM이라면 웹 콘솔) 후 설정 복구  
-- 필요 시 `PermitRootLogin yes` 와 `AllowUsers` 설정을 최소화하여 임시 접속 허용
-</details>
-
-<details>
-<summary><h3> 5. cron 실행이 안 되는 경우</h3></summary>
-<br>
-스크립트가 수동 실행은 잘 되지만 `cron` 등록 후 실행되지 않는 문제가 발생할 수 있음.  
-
-원인:
-- `cron` 환경에서는 PATH, 환경변수 부족
-- `journalctl` 명령어 실행 시 `sudo` 권한 문제
+`<strong>sshd_config</strong>` 또는 `/etc/ssh/sshd_config.d/*.conf` 설정 오류 시 <strong>SSH 연결 차단</strong> 발생.  
 
 해결:
-- `cron`에서 절대 경로 지정:
-cron
-* * * * * /usr/bin/bash /home/ubuntu/Linux_Root-Monitoring/scripts/monitor.sh
-- 스크립트 내부에서 `sudo` 사용 시, `visudo` 로 `NOPASSWD` 권한 부여
+- 변경 전 <strong>문법 검사</strong>:
+```bash
+sudo sshd -t
+```
+- 문제 발생 시 <strong>콘솔 접속</strong> 후 설정 복구  
+- 임시 조치: `PermitRootLogin yes`, 최소한의 `AllowUsers` 허용
 </details>
 
 <details>
-<summary><h3> 6. systemd 서비스 로그 확인</h3></summary>
+<summary><h3> 5. <strong>cron 실행 문제</strong></h3></summary>
 <br>
-systemd 서비스 등록 후 실행이 안 될 경우 로그 확인이 필요:
-bash
+스크립트는 수동 실행 시 정상 동작하나 <strong>cron 등록 후 실행 실패</strong> 상황 발생.  
+
+원인:
+- <strong>PATH/환경변수 부족</strong>  
+- `journalctl` 실행 시 <strong>sudo 권한 문제</strong>  
+
+해결:
+- cron에 절대 경로 지정:
+```cron
+* * * * * /usr/bin/bash /home/ubuntu/Linux_Root-Monitoring/scripts/monitor.sh
+```
+- 스크립트 내 sudo 사용 시:
+```bash
+sudo visudo
+ubuntu ALL=(ALL) NOPASSWD:ALL
+```
+</details>
+
+<details>
+<summary><h3> 6. <strong>systemd 서비스 로그 확인</strong></h3></summary>
+<br>
+systemd 서비스 등록 후 실행 실패 시 로그 확인 필요:  
+```bash
 sudo systemctl status root-monitor
 journalctl -u root-monitor -f
+```
 
-👉 로그를 통해 Slack 전송 실패, iptables 권한 문제 등 원인을 빠르게 파악할 수 있음.
+👉 로그를 통해 <strong>Slack 전송 실패</strong>, <strong>iptables 권한 문제</strong> 등 원인 파악 가능.
 </details>
