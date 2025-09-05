@@ -1,6 +1,6 @@
 # Linux_root_Monitoring
 
-Ubuntu를 이용해 **root 계정 및 sudo 권한 접근을 탐지**하고 Slack에 알림 전송 및 비인가 IP 자동 차단 기능을 구현한 레포지토리입니다!
+Ubuntu를 이용해 **root 계정 및 sudo 권한 접근을 탐지**하고, Slack에 알림 전송 및 비인가 IP 자동 차단 기능을 구현한 레포지토리입니다!
 
 <br>
 
