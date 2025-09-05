@@ -57,11 +57,11 @@ Ubuntu를 이용해 root 계정과 sudo 권한 접근을 탐지하고, Slack에 
 <br/>
 
 # 5. Technology Stack (기술 스택)
+## 5.1 
 |  |  |
 |-----------------|-----------------|
-| Ubuntu    |<img src="https://github.com/user-attachments/assets/2e122e74-a28b-4ce7-aff6-382959216d31" alt="HTML5" width="100">| 
-| MobaXterm    |   <img src="https://github.com/user-attachments/assets/c531b03d-55a3-40bf-9195-9ff8c4688f13" alt="CSS3" width="100">|
-| 더 쓴게 있나    |  <img src="https://github.com/user-attachments/assets/4a7d7074-8c71-48b4-8652-7431477669d1" alt="Javascript" width="100"> | 
+| Ubuntu    |<img src="https://assets.ubuntu.com/v1/ff6a9a38-ubuntu-logo-2022.svg" alt="Ubuntu" width="80" height="80">| 
+| MobaXterm    |<img src="https://dashboardicons.com/icons/mobaxterm/png/512x512" alt="MobaXterm" width="80" height="80">|
 
 <br/>
 
@@ -70,7 +70,7 @@ Ubuntu를 이용해 root 계정과 sudo 권한 접근을 탐지하고, Slack에 
 |-----------------|-----------------|
 | Git    |  <img src="https://github.com/user-attachments/assets/483abc38-ed4d-487c-b43a-3963b33430e6" alt="git" width="100">    |
 | Notion    |  <img src="https://github.com/user-attachments/assets/34141eb9-deca-416a-a83f-ff9543cc2f9a" alt="Notion" width="100">    |
-| Slack    |   <img src="" alt="Slack" width="100">   |
+| Slack    |   <img src="https://cdn.simpleicons.org/slack" alt="Slack" width="100">   |
 
 <br/>
 
@@ -83,11 +83,8 @@ systemd-journald  ──┐
                    ├── Slack Webhook 알림 (curl)
                    │
                    └── (옵션) 비인가 IP 자동 차단 (ufw/iptables)
-
 ```
 
-<br/>
-<br/>
 
 # 7. 구성 파일
 
@@ -106,7 +103,20 @@ Linux_Root-Monitoring/
 <br/>
 <br/>
 
-# 10. 결과 출력
+# 8. 결과 출력
 <img width="100%" alt="root 계정 접근 알림 출력" src="">
 <img width="100%" alt="root 계정 접근 비인가 IP 차단" src="">
-<img width="100%" alt="일반 USER의 sudo 명령어 사용 감지" src="">
+<img width="100%" alt="일반 USER의 sudo 명령어 사용 감지" src="https://github.com/user-attachments/assets/bf33c4e1-dcb2-4002-a1e7-f1dace5bb4fc">
+
+# 9. 트러블슈팅
+
+<details>
+<summary>  1. restart 로 root 권한 변경 적용 </summary>
+<br>
+시스템 설정 파일에서 root 권한을 부여했음에도, 즉시 적용되지 않아 root 계정 접근이 불가능한 문제가 발생.  
+원인 분석 과정에서 서비스 단순 재시작만으로는 반영되지 않는 경우가 있음을 확인하였고, 최종적으로 시스템을 재부팅(restart)하여 권한 변경 사항이 정상적으로 적용됨을 확인.  
+
+**권한 및 보안 설정 변경 시 즉각적인 반영 여부를 점검하고, 필요 시 시스템 재시작을 고려해야 한다는 점**을 학습했습니다.  
+
+</details>
+
