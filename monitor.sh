@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 
 # ===== 설정 =====
-WEBHOOK_URL="https://hooks.slack.com/services/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"
+WEBHOOK_URL="https://hooks.slack.com/services/***"
 ALLOW_FILE="/home/ubuntu/allow_ips.txt"
 TIME_WINDOW_MIN=1
 THRESHOLD=3
